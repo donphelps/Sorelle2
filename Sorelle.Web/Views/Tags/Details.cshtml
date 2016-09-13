@@ -1,0 +1,64 @@
+﻿@using Sorelle.Model
+@using Sorelle.Model.Enums
+@using Sorelle.Web.Models
+@model Tag
+<div class="row">
+	<div class="col-lg-3 col-sm-4 col-xs-12">
+		<div class="card @Helpers.BackgroundCSS(Model.Color)">
+			<h1 class="tag-title">@Model.Name</h1>
+			<span class="glyphicon glyphicon-tag"></span>&nbsp;@Html.DisplayFor(model => model.Type) Tag
+		</div>
+		<div class="card">
+			<div class="btn-group btn-group-xs btn-group-justified">
+				<a href="/tag/edit/@Model.Id" class="btn btn-sm"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+				<a href="/tag/delete/@Model.Id" class="btn btn-sm"><span class="glyphicon glyphicon-remove"></span> Delete</a>
+			</div>
+		</div>
+		@TagList("Priority", ViewBag.TagList.Priority)
+		@TagList("Status", ViewBag.TagList.Status)
+		@TagList("Planning", ViewBag.TagList.Planning)
+		@TagList("Constraint", ViewBag.TagList.Constraint)
+		@OtherTagList(ViewBag.TagList.Other)
+	</div>
+	<div class="col-lg-9 col-sm-8 col-xs-12">
+		<div class="card">
+			<div class="row">
+				<div class="col-xs-6">
+					<span class="card-title">Tasks</span>
+				</div>
+				<div class="col-xs-6">
+					@Html.Partial("~/Views/Tasks/_QuickAdd.cshtml", (QuickAddViewModel)ViewBag.QuickAddInfo)
+				</div>
+				<div class="col-xs-12">
+					@Html.Partial("~/Views/Tasks/_TaskList.cshtml", (IEnumerable<Task>)Model.Tasks)
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@helper TagList(string title, List<Tag> tags)
+{
+	<div class="card">
+		<span class="card-title">@title</span>
+		<div class="btn-group-vertical btn-group-sm wide">
+			@foreach (Tag tag in tags)
+			{
+				<a href="/tag/@tag.Id" class="btn @Helpers.ForegroundCSS(tag.Color) @Helpers.BorderCSS(tag.Color)">@tag.Name</a>
+			}
+			<a href="/tag/new/@title.ToLower()?returnUrl=@Request.RawUrl" class="btn btn-sm btn-tag @Helpers.ForegroundCSS(TagColor.Default) @Helpers.BorderCSS(TagColor.Default)"><span class="glyphicon glyphicon-plus bottom"></span> @title</a>
+		</div>
+	</div>
+}
+
+@helper OtherTagList(List<Tag> tags)
+{
+	<div class="card">
+		<span class="card-title">Other</span>
+		@foreach (Tag tag in tags)
+	{
+			<a href="/tag/@tag.Id" class="btn btn-sm btn-tag @Helpers.ForegroundCSS(tag.Color) @Helpers.BorderCSS(tag.Color)">@tag.Name</a>
+	}
+		<a href="/tag/new?returnUrl=@Request.RawUrl" class="btn btn-sm btn-tag @Helpers.ForegroundCSS(TagColor.Default) @Helpers.BorderCSS(TagColor.Default)"><span class="glyphicon glyphicon-plus bottom"></span> Other</a>
+	</div>
+}

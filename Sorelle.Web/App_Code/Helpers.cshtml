@@ -1,0 +1,260 @@
+﻿﻿@using Sorelle.Model.Enums
+@using Sorelle.Model
+
+@helper TagSelectOnCSS(TagColor? color)
+{
+if (color != null)
+{
+	switch (color)
+	{
+		case TagColor.Blue:
+				@:bg-blue
+			break;
+		case TagColor.BlueLt:
+				@:bg-bluelt
+			break;
+		case TagColor.Cyan:
+				@:bg-cyan
+			break;
+		case TagColor.Default:
+				@:bg-default
+			break;
+		case TagColor.Green:
+				@:bg-green
+			break;
+		case TagColor.GreenLt:
+				@:bg-greenlt
+			break;
+		case TagColor.Orange:
+				@:bg-orange
+			break;
+		case TagColor.Pink:
+				@:bg-pink
+			break;
+		case TagColor.Purple:
+				@:bg-purple
+			break;
+		case TagColor.Red:
+				@:bg-red
+			break;
+		case TagColor.Yellow:
+				@:bg-yellow
+			break;
+		}
+	}
+}
+
+@helper TagSelectOffCSS(TagColor? color)
+{
+if (color != null)
+{
+	switch (color)
+	{
+		case TagColor.Blue:
+				@:fg-blue border-blue
+			break;
+		case TagColor.BlueLt:
+				@:fg-bluelt border-bluelt
+			break;
+		case TagColor.Cyan:
+				@:fg-cyan border-cyan
+			break;
+		case TagColor.Default:
+				@:fg-default border-default
+			break;
+		case TagColor.Green:
+				@:fg-green border-green
+			break;
+		case TagColor.GreenLt:
+				@:fg-greenlt border-greenlt
+			break;
+		case TagColor.Orange:
+				@:fg-orange border-orange
+			break;
+		case TagColor.Pink:
+				@:fg-pink border-pink
+			break;
+		case TagColor.Purple:
+				@:fg-purple border-purple
+			break;
+		case TagColor.Red:
+				@:fg-red border-red
+			break;
+		case TagColor.Yellow:
+				@:fg-yellow border-yellow
+			break;
+		}
+	}
+}
+
+@helper ForegroundCSS(TagColor? color)
+{
+if (color != null)
+{
+	switch (color)
+	{
+		case TagColor.Blue:
+				@:fg-blue
+			break;
+		case TagColor.BlueLt:
+				@:fg-bluelt
+			break;
+		case TagColor.Cyan:
+				@:fg-cyan
+			break;
+		case TagColor.Default:
+				@:fg-default
+			break;
+		case TagColor.Green:
+				@:fg-green
+			break;
+		case TagColor.GreenLt:
+				@:fg-greenlt
+			break;
+		case TagColor.Orange:
+				@:fg-orange
+			break;
+		case TagColor.Pink:
+				@:fg-pink
+			break;
+		case TagColor.Purple:
+				@:fg-purple
+			break;
+		case TagColor.Red:
+				@:fg-red
+			break;
+		case TagColor.Yellow:
+				@:fg-yellow
+			break;
+		}
+	}
+}
+
+@helper BackgroundCSS(TagColor? color)
+{
+if (color != null)
+{
+	switch (color)
+	{
+		case TagColor.Blue:
+				@:bg-blue
+			break;
+		case TagColor.BlueLt:
+				@:bg-bluelt
+			break;
+		case TagColor.Cyan:
+				@:bg-cyan
+			break;
+		case TagColor.Default:
+				@:bg-default
+			break;
+		case TagColor.Green:
+				@:bg-green
+			break;
+		case TagColor.GreenLt:
+				@:bg-greenlt
+			break;
+		case TagColor.Orange:
+				@:bg-orange
+			break;
+		case TagColor.Pink:
+				@:bg-pink
+			break;
+		case TagColor.Purple:
+				@:bg-purple
+			break;
+		case TagColor.Red:
+				@:bg-red
+			break;
+		case TagColor.Yellow:
+				@:bg-yellow
+			break;
+		}
+	}
+}
+
+@helper BorderCSS(TagColor? color)
+{
+if (color != null)
+{
+	switch (color)
+	{
+		case TagColor.Blue:
+				@:border-blue
+			break;
+		case TagColor.BlueLt:
+				@:border-bluelt
+			break;
+		case TagColor.Cyan:
+				@:border-cyan
+			break;
+		case TagColor.Default:
+				@:border-default
+			break;
+		case TagColor.Green:
+				@:border-green
+			break;
+		case TagColor.GreenLt:
+				@:border-greenlt
+			break;
+		case TagColor.Orange:
+				@:border-orange
+			break;
+		case TagColor.Pink:
+				@:border-pink
+			break;
+		case TagColor.Purple:
+				@:border-purple
+			break;
+		case TagColor.Red:
+				@:border-red
+			break;
+		case TagColor.Yellow:
+				@:border-yellow
+			break;
+		}
+	}
+}
+
+@helper BorderSidesCSS(TagColor? color)
+{
+if (color != null)
+{
+	switch (color)
+	{
+		case TagColor.Blue:
+				@:border-l-blue
+			break;
+		case TagColor.BlueLt:
+				@:border-l-bluelt
+			break;
+		case TagColor.Cyan:
+				@:border-l-cyan
+			break;
+		case TagColor.Default:
+				@:border-l-default
+			break;
+		case TagColor.Green:
+				@:border-l-green
+			break;
+		case TagColor.GreenLt:
+				@:border-l-greenlt
+			break;
+		case TagColor.Orange:
+				@:border-l-orange
+			break;
+		case TagColor.Pink:
+				@:border-l-pink
+			break;
+		case TagColor.Purple:
+				@:border-l-purple
+			break;
+		case TagColor.Red:
+				@:border-l-red
+			break;
+		case TagColor.Yellow:
+				@:border-l-yellow
+			break;
+	}
+}
+}

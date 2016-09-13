@@ -1,0 +1,61 @@
+﻿@using Microsoft.AspNet.Identity;
+@model Sorelle.Web.Models.LoginViewModel
+
+<div class="row">
+	<div class="jumbotron col-sm-6 col-xs-12">
+		<h1>Sorelle</h1>
+		<p class="lead">Workflow based task management</p>
+	</div>
+	<div class="col-sm-6 col-xs-12 pull-right">
+		<section id="loginForm">
+			@*<div class="row">*@
+				@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+				{
+					<div class="form-group">
+						@Html.AntiForgeryToken()
+						@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+						@*@Html.LabelFor(m => m.Email, new { @class = "control-label" })*@
+						@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+						@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						@*@Html.LabelFor(m => m.Password, new { @class = "control-label" })*@
+						@Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+						@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+					</div>
+					<div class="form-group">
+						<div class="checkbox text-right">
+							@Html.CheckBoxFor(m => m.RememberMe)
+							@Html.LabelFor(m => m.RememberMe)
+						</div>
+					</div>
+					<div class="form-group">
+						<input type="submit" value="Log in" class="btn btn-lg bg-green fg-gray-lightest btn-right" />
+					</div>
+				}
+			@*</div>*@
+		</section>
+	</div>
+</div>
+
+@*<div class="row">
+	<div class="col-md-4">
+		<h2>Getting started</h2>
+		<p>
+			ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+			enables a clean separation of concerns and gives you full control over markup
+			for enjoyable, agile development.
+		</p>
+		<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+	</div>
+	<div class="col-md-4">
+		<h2>Get more libraries</h2>
+		<p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+		<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+	</div>
+	<div class="col-md-4">
+		<h2>Web Hosting</h2>
+		<p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+		<p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+	</div>
+</div>*@

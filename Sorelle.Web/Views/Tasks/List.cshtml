@@ -1,0 +1,13 @@
+﻿@using Sorelle.Web.Models
+@model IEnumerable<Sorelle.Model.Task>
+<div class="row">
+	<div class="col-sm-6 col-xs-12">
+		<span class="h2vw">@ViewBag.Title</span>
+	</div>
+	<div class="col-sm-6 col-xs-12">
+		@Html.Partial("~/Views/Tasks/_QuickAdd.cshtml", (QuickAddViewModel)ViewBag.QuickAddInfo)
+	</div>
+</div>
+<div class="card">
+	@Html.Partial("~/Views/Tasks/_TaskList.cshtml", Model)
+</div>

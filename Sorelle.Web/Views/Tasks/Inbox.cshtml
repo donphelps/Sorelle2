@@ -1,0 +1,186 @@
+﻿@using Sorelle.Model
+@using Sorelle.Web.Models
+@model Task
+
+<div class="row">
+	<div class="col-xs-6">
+		<h2>Inbox Review</h2>
+	</div>
+	<div class="col-xs-6">
+		<a href="/api/task/inbox/@Model.Id/remove" class="btn right btn-warning btn-sm">Save &amp; Next</a>
+	</div>
+</div>
+<hr class="hr-thin" />
+<div class="row">
+	<div class="col-lg-3 col-sm-4 col-xs-12">
+		@TitleCard()
+		@ParentTaskCard()
+		@TaskButtonsCard()
+		@DatesCard()
+		@NotesCard()
+	</div>
+	<div class="col-lg-9 col-sm-8 col-xs-12">
+		@TagSelectionList()
+		<div class="card">
+			<div class="row">
+				<div class="col-xs-6">
+					<span class="card-title">Subtasks</span>
+				</div>
+				<div class="col-xs-6">
+					@Html.Partial("~/Views/Tasks/_QuickAdd.cshtml", (QuickAddViewModel)ViewBag.QuickAddInfo)
+				</div>
+				<div class="col-xs-12">
+					@Html.Partial("~/Views/Tasks/_TaskList.cshtml", Model.Tasks)
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+@helper TitleCard()
+{
+	<div class="card @if (Model.PriorityTag != null) { @Helpers.BackgroundCSS(Model.PriorityTag.Color) }">
+		<h1 class="tag-title">@Html.Encode(Model.Name)</h1>
+	</div>
+}
+
+@helper ParentTaskCard()
+{
+if (Model.ParentTask != null)
+{
+		<div class="card">
+			<h4>Parent Task:</h4>
+			@Model.ParentTask.Name
+		</div>
+}
+}
+
+@helper TaskButtonsCard()
+{
+	<div class="card">
+		<div class="btn-group-vertical wide" role="group">
+			@if (Model.isPinned)
+			{
+				<a href="/api/task/@Model.Id/togglepin?returnUrl=@Request.RawUrl" class="btn h5vw fg-greenlt"><span class="glyphicon glyphicon-pushpin"></span> Pinned</a>
+			}
+			else
+			{
+				<a href="/api/task/@Model.Id/togglepin?returnUrl=@Request.RawUrl" class="btn h5vw fg-disabled"><span class="glyphicon glyphicon-pushpin"></span> Unpinned</a>
+			}
+			@if (Model.isProject)
+			{
+				<a href="/api/task/@Model.Id/toggleproject?returnUrl=@Request.RawUrl" class="btn h5vw fg-bluelt"><span class="glyphicon glyphicon-list"></span> Is a Project</a>
+			}
+			else
+			{
+				<a href="/api/task/@Model.Id/toggleproject?returnUrl=@Request.RawUrl" class="btn h5vw fg-disabled"><span class="glyphicon glyphicon-list"></span> Is not a Project</a>
+			}
+			<a href="/t/edit/@Model.Id?returnUrl=@Request.RawUrl" class="btn h5vw"><span class="glyphicon glyphicon-edit"></span> Edit</a>
+		</div>
+	</div>
+}
+
+@helper DatesCard()
+{
+	<div class="card">
+		<span class="card-title">Dates</span>
+		<hr class="hr-thin" />
+		@Html.DisplayNameFor(model => model.DueDate):
+		@Html.DisplayFor(model => model.DueDate, new { @class = "due-date" })
+		@if (Model.CompletedAt != null)
+		{
+			<br />
+			@:Task Completion Date:
+			@Html.DisplayFor(model => model.CompletedAt)
+		}
+	</div>
+}
+
+@helper NotesCard()
+{
+if (Model.Notes != "" && Model.Notes != null)
+{
+		<div class="card">
+			<span class="card-title">Task Notes</span>
+			<hr class="hr-thin" />
+			<h4>@Html.DisplayNameFor(model => model.Notes)</h4>
+			@Html.DisplayFor(model => model.Notes, new { @class = "notes" })
+			<hr class="hr-thin" />
+		</div>
+}
+}
+
+@helper TagSelectionList()
+{
+	<div class="card">
+		<div class="row">
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<h4>Priority</h4>
+				<div class="btn-group-vertical btn-group-xs wide">
+					@foreach (TagSelect ts in (List<TagSelect>)ViewBag.SelectTags.Priority)
+					{
+						@TagSelect(ts)
+					}
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<h4>Status</h4>
+				<div class="btn-group-vertical btn-group-xs wide">
+					@foreach (TagSelect ts in (List<TagSelect>)ViewBag.SelectTags.Status)
+					{
+						@TagSelect(ts)
+					}
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<h4>Planning</h4>
+				<div class="btn-group-vertical btn-group-xs wide">
+					@foreach (TagSelect ts in (List<TagSelect>)ViewBag.SelectTags.Planning)
+					{
+						@TagSelect(ts)
+					}
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-3 col-xs-12">
+				<h4>Constraint</h4>
+				<div class="btn-group-vertical btn-group-xs wide">
+					@foreach (TagSelect ts in (List<TagSelect>)ViewBag.SelectTags.Constraint)
+					{
+						@TagSelect(ts)
+					}
+				</div>
+			</div>
+			<div class="col-xs-12">
+				<h4>Other</h4>
+				@foreach (TagSelect ts in (List<TagSelect>)ViewBag.SelectTags.Other)
+				{
+					@TagSelectOther(ts)
+				}
+			</div>
+		</div>
+	</div>
+}
+
+@helper TagSelect(TagSelect ts)
+{
+if (ts.Selected)
+{
+		<a href="/api/task/@Model.Id/detachtag/@ts.Id?returnUrl=@Request.RawUrl" class="btn @Helpers.TagSelectOnCSS(ts.Color)">@ts.Name</a>
+}
+else
+{
+		<a href="/api/task/@Model.Id/attachtag/@ts.Id?returnUrl=@Request.RawUrl" class="btn @Helpers.TagSelectOffCSS(ts.Color)">@ts.Name</a>
+}
+}
+
+@helper TagSelectOther(TagSelect ts)
+{
+if (ts.Selected)
+{
+		<a href="/api/task/@Model.Id/detachtag/@ts.Id?returnUrl=@Request.RawUrl" class="btn btn-xs @Helpers.TagSelectOnCSS(ts.Color)">@ts.Name</a>
+}
+else
+{
+		<a href="/api/task/@Model.Id/attachtag/@ts.Id?returnUrl=@Request.RawUrl" class="btn btn-xs @Helpers.TagSelectOffCSS(ts.Color)">@ts.Name</a>
+}
+}

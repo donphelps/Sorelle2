@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Sorelle.Model.Task>
+<h2>@ViewBag.Title</h2>
+@if (Model?.Count() == 0)
+{
+	<h3 class="fg-default">No recently completed tasks</h3>
+}
+else
+{
+	<a href="/t/removecomplete" class="btn btn-warning text-right"><span class="glyphicon glyphicon-trash"></span> Remove All Complete</a><br />
+	@Html.Partial("~/Views/Tasks/_TaskListCompleted.cshtml", Model)
+}

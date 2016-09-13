@@ -1,0 +1,45 @@
+﻿@using Sorelle.Model;
+@using Sorelle.Model.Enums;
+<div class="row">
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+		@TagList("Priority", (List<Tag>)ViewBag.TagList.Priority)
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+		@TagList("Status", (List<Tag>)ViewBag.TagList.Status)
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+		@TagList("Planning", (List<Tag>)ViewBag.TagList.Planning)
+	</div>
+	<div class="col-lg-3 col-md-3 col-sm-6 col-xs-6">
+		@TagList("Constraint", (List<Tag>)ViewBag.TagList.Constraint)
+	</div>
+	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		@OtherTagList((List<Tag>)ViewBag.TagList.Other)
+	</div>
+</div>
+
+@helper TagList(string title, List<Tag> tags)
+{
+	<div class="card">
+		<span class="card-title">@title</span>
+		<div class="btn-group-vertical btn-group-sm wide">
+			@foreach (Tag tag in tags)
+			{
+				<a href="/tag/@tag.Id" class="btn @Helpers.ForegroundCSS(tag.Color) @Helpers.BorderCSS(tag.Color)">@tag.Name</a>
+			}
+			<a href="/tag/new/@title.ToLower()?returnUrl=@Request.RawUrl" class="btn btn-sm btn-tag @Helpers.ForegroundCSS(TagColor.Default)"><span class="glyphicon glyphicon-plus bottom"></span> @title</a>
+		</div>
+	</div>
+}
+
+@helper OtherTagList(List<Tag> tags)
+{
+	<div class="card">
+		<span class="card-title">Other</span>
+		@foreach (Tag tag in tags)
+		{
+			<a href="/tag/@tag.Id" class="btn btn-sm btn-tag @Helpers.ForegroundCSS(tag.Color) @Helpers.BorderCSS(tag.Color)">@tag.Name</a>
+		}
+		<a href="/tag/new?returnUrl=@Request.RawUrl" class="btn btn-sm btn-tag @Helpers.ForegroundCSS(TagColor.Default)"><span class="glyphicon glyphicon-plus bottom"></span> Other</a>
+	</div>
+}

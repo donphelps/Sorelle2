@@ -1,0 +1,29 @@
+﻿@model Sorelle.Web.Models.LoginViewModel
+<section id="loginForm">
+	<div class="row">
+		@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+		{
+			<div class="form-group col-xs-12">
+				@Html.AntiForgeryToken()
+				@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+				@*@Html.LabelFor(m => m.Email, new { @class = "control-label" })*@
+				@Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "Email" })
+				@Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group col-xs-12">
+				@*@Html.LabelFor(m => m.Password, new { @class = "control-label" })*@
+				@Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+				@Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+			</div>
+			<div class="form-group col-xs-6">
+				<div class="checkbox">
+					@Html.CheckBoxFor(m => m.RememberMe)
+					@Html.LabelFor(m => m.RememberMe)
+				</div>
+			</div>
+			<div class="form-group col-xs-6">
+				<input type="submit" value="Log in" class="btn btn-default" />
+			</div>
+		}
+	</div>
+</section>

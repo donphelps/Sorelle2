@@ -1,0 +1,85 @@
+﻿@using Sorelle.Model
+@model IEnumerable<Sorelle.Model.Task>
+<div class="row">
+	<div class="col-lg-12">
+		<table class="table table-responsive">
+			<tr>
+				<th></th>
+				<th>Name</th>
+				<th class="hide-xs">Priority</th>
+				<th class="hide-sm hide-xs">Status</th>
+				<th>Due Date</th>
+			</tr>
+			@foreach (var item in Model)
+			{
+				@TaskRow(item)
+			}
+		</table>
+	</div>
+</div>
+
+@helper TaskRow(Task item)
+{
+	<tr class="task @Helpers.BorderSidesCSS(item.PriorityTag?.Color)">
+		<td>
+			@CompleteLink(item)
+			@if (item.isPinned)
+			{
+				<a href="/api/task/@item.Id/togglePin?returnUrl=@Request.RawUrl"><span class="glyphicon glyphicon-pushpin fg-greenlt"></span></a>
+			}
+			else
+			{
+				<a href="/api/task/@item.Id/togglePin?returnUrl=@Request.RawUrl"><span class="glyphicon glyphicon-pushpin fg-disabled"></span></a>
+			}
+			<a href="/t/edit/@item.Id?returnUrl=@Request.RawUrl"><span class="glyphicon glyphicon-edit fg-default"></span></a>
+		</td>
+		<td>
+			<a href="/t/@item.Id" class="@Helpers.ForegroundCSS(item.PriorityTag?.Color) @StrikeClass(item.CompletedAt != null)">@item.Name</a>
+			@if (item.isProject)
+			{<a href="/t/projects"><span class="label label-primary">Project</span></a>}
+		</td>
+		<td class="hide-xs">
+			@if (item.PriorityTag != null)
+			{
+				<a href="/tag/@item.PriorityTag.Id" class="@Helpers.ForegroundCSS(item.PriorityTag?.Color) @StrikeClass(item.CompletedAt != null)">@Html.Raw(item.PriorityTag?.Name)</a>
+			}
+			else
+			{
+				<span class="fg-default">None</span>
+			}
+		</td>
+		<td class="hide-md hide-sm hide-xs">
+			@if (item.StatusTag != null)
+			{
+				<a href="/tag/@item.StatusTag.Id" class="@Helpers.ForegroundCSS(item.StatusTag?.Color) @StrikeClass(item.CompletedAt != null)">@Html.Raw(item.StatusTag?.Name)</a>
+			}
+			else
+			{
+				<span class="fg-default">None</span>
+			}
+		</td>
+		<td class="@StrikeClass(item.CompletedAt != null)">
+			@Html.Raw(item.DueDate?.Date)
+		</td>
+	</tr>
+}
+
+@helper CompleteLink(Task item)
+{
+	if (item.CompletedAt == null)
+	{
+		<a href="/api/task/@item.Id/complete?returnUrl=@Request.RawUrl"><span class="glyphicon glyphicon-unchecked"></span></a>
+	}
+	else
+	{
+		<a href="/api/task/@item.Id/uncomplete?returnUrl=@Request.RawUrl"><span class="glyphicon glyphicon-ok fg-disabled"></span></a>
+	}
+}
+
+@helper StrikeClass(bool strike)
+{
+	if (strike)
+	{
+		@:strike
+	}
+}
