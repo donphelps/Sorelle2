@@ -32,17 +32,25 @@ namespace Sorelle.Data.Repositories
 				.Include(t => t.Tags)
 				.FirstOrDefault();
 
-			task.Tasks = task.Tasks
-				.Where(t => t.CompletedAt == null && t.DeletedAt == null)
-				.OrderByDescending(o => o.isPinned)
-				.ThenByDescending(o => o.DueDate)
-				.ThenBy(o => o.PriorityTag == null)
-				.ThenByDescending(o => o.PriorityTag?.Color)
-				.ToList();
+			if (task != null && task.Tasks != null)
+				task.Tasks = task.Tasks
+					.Where(t => t.CompletedAt == null && t.DeletedAt == null)
+					.OrderByDescending(o => o.isPinned)
+					.ThenByDescending(o => o.DueDate)
+					.ThenBy(o => o.PriorityTag == null)
+					.ThenByDescending(o => o.PriorityTag?.Color)
+					.ToList();
 
 			return task;
 		}
 
+		/// <summary>
+		/// Gets the next inbox task.
+		/// </summary>
+		/// <param name="userid">The userid.</param>
+		/// <returns>
+		/// Sorelle.Model.Task
+		/// </returns>
 		public Task GetNextInboxTask(string userid)
 		{
 			var task = dbset.Where(t => t.Inboxed && t.UserId == userid)
@@ -54,13 +62,14 @@ namespace Sorelle.Data.Repositories
 				.OrderBy(t => t.Id)
 				.FirstOrDefault();
 
-			task.Tasks = task.Tasks
-				.Where(t => t.CompletedAt == null && t.DeletedAt == null)
-				.OrderByDescending(o => o.isPinned)
-				.ThenByDescending(o => o.DueDate)
-				.ThenBy(o => o.PriorityTag == null)
-				.ThenByDescending(o => o.PriorityTag?.Color)
-				.ToList();
+			if (task != null && task.Tasks != null)
+				task.Tasks = task.Tasks
+					.Where(t => t.CompletedAt == null && t.DeletedAt == null)
+					.OrderByDescending(o => o.isPinned)
+					.ThenByDescending(o => o.DueDate)
+					.ThenBy(o => o.PriorityTag == null)
+					.ThenByDescending(o => o.PriorityTag?.Color)
+					.ToList();
 
 			return task;
 		}
